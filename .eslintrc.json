@@ -24,5 +24,20 @@
     "rules": {
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustce-deps": "warn",
+        "react/jsx-filename-extension": [1, {"extension":[".tsx"]}],
+        "import/prefer-default-export": "off",
+        "import/extensions": [
+            "error",
+            "ignorepackages",
+            {
+                "tsx": "never",
+                "ts": "never"
+            }
+        ]
+    },
+    "settings": {
+        "import/resolver": {
+            "typescript": {}
+        }
     }
 }
