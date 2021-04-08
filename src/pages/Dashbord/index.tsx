@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, FormEvent } from 'react';
 import { FiChevronRight } from 'react-icons/fi';
 import api from '../../services/api';
 
@@ -11,10 +11,12 @@ const Dashbord: React.FC = () => {
 
     const [repositorios, setrepositorios] = useState([]);
 
-    function handleAddrepositorio() {
-        // pega valor de campo
-        // addiciona repositorios
+    async function handleAddrepositorio(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+
         // consumi api
+        const response = await api.get(`repos/${newRepo}`);
+        console.log(response.data);
     }
 
     return (
@@ -22,15 +24,13 @@ const Dashbord: React.FC = () => {
             <img src={logo} alt="Gitfinder" style={{ width: 50 }} />
             <Title>Explore repositorios no GitHub</Title>
 
-            <Form>
+            <Form onSubmit={handleAddrepositorio}>
                 <input
                     value={newRepo}
-                    onChange={(e) => setnewRrepo(newRepo)}
+                    onChange={(e) => setnewRrepo(e.target.value)}
                     placeholder="Digite o nome do repositorio"
                 />
-                <button onClick={handleAddrepositorio} type="submit">
-                    Pesquisar
-                </button>
+                <button type="submit">Pesquisar</button>
             </Form>
 
             <Repositories>
