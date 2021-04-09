@@ -36,6 +36,7 @@ const Dashbord: React.FC = () => {
 
             setrepositorios([...repositorios, repositorio]);
             setnewRrepo('');
+            setInputError('');
         } catch (err) {
             setInputError('Repositorio não existe');
         }
@@ -46,7 +47,7 @@ const Dashbord: React.FC = () => {
             <img src={logo} alt="Gitfinder" style={{ width: 50 }} />
             <Title>Explore repositorios no GitHub</Title>
 
-            <Form onSubmit={handleAddrepositorio}>
+            <Form hasError={!!inputError} onSubmit={handleAddrepositorio}>
                 <input
                     value={newRepo}
                     onChange={(e) => setnewRrepo(e.target.value)}
