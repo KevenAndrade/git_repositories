@@ -44,6 +44,11 @@ export const Form = styled.form`
         }
     }
 `;
+export const Error = styled.span`
+    display: block;
+    color: #c53030;
+    margin-top: 8px;
+`;
 
 export const Repositories = styled.div`
     margin-top: 80px;
@@ -79,6 +84,7 @@ export const Repositories = styled.div`
 
         div {
             margin-left: 16px;
+            flex: 1;
 
             strong {
                 font-weight: bold;
@@ -87,7 +93,7 @@ export const Repositories = styled.div`
             }
             p {
                 margin-top: 4px;
-                font-size: 18px;
+                font-size: 15px;
                 color: #3a3a3a;
             }
         }

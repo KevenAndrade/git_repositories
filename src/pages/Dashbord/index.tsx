@@ -4,19 +4,41 @@ import api from '../../services/api';
 
 import logo from '../../assets/github_logo.svg';
 
-import { Title, Form, Repositories } from './style';
+import { Title, Form, Repositories, Error } from './style';
+
+interface Repositorio {
+    full_name: string; // eslint-disable-line
+    description: string;
+    owner: {
+        login: string;
+        avatar_url: string; // eslint-disable-line
+    };
+}
 
 const Dashbord: React.FC = () => {
     const [newRepo, setnewRrepo] = useState('');
-
-    const [repositorios, setrepositorios] = useState([]);
+    const [inputError, setInputError] = useState('');
+    const [repositorios, setrepositorios] = useState<Repositorio[]>([]);
 
     async function handleAddrepositorio(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
+        if (!newRepo) {
+            setInputError('Digite o autor/nome do repositorio');
+            return;
+        }
+
         // consumi api
-        const response = await api.get(`repos/${newRepo}`);
-        console.log(response.data);
+        try {
+            const response = await api.get<Repositorio>(`repos/${newRepo}`);
+
+            const repositorio = response.data;
+
+            setrepositorios([...repositorios, repositorio]);
+            setnewRrepo('');
+        } catch (err) {
+            setInputError('Repositorio não existe');
+        }
     }
 
     return (
@@ -33,18 +55,22 @@ const Dashbord: React.FC = () => {
                 <button type="submit">Pesquisar</button>
             </Form>
 
+            {inputError && <Error>{inputError}</Error>}
+
             <Repositories>
-                <a href="teste">
-                    <img
-                        src="https://avatars.githubusercontent.com/u/65917547?v=4"
-                        alt="Perfil"
-                    />
-                    <div>
-                        <strong>KevenAndrade / API_NPS</strong>
-                        <p> Its a NPS !! Did you ever recieve ...</p>
-                    </div>
-                    <FiChevronRight size={20} />
-                </a>
+                {repositorios.map((repos) => (
+                    <a key={repos.full_name} href="teste">
+                        <img
+                            src={repos.owner.avatar_url}
+                            alt={repos.owner.login}
+                        />
+                        <div>
+                            <strong>{repos.full_name}</strong>
+                            <p>{`${repos.description.substring(0, 55)} ...`}</p>
+                        </div>
+                        <FiChevronRight size={20} />
+                    </a>
+                ))}
             </Repositories>
         </>
     );
