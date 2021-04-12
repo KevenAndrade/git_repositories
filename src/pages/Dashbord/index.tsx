@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 import { FiChevronRight } from 'react-icons/fi';
 import api from '../../services/api';
 
@@ -19,6 +19,13 @@ const Dashbord: React.FC = () => {
     const [newRepo, setnewRrepo] = useState('');
     const [inputError, setInputError] = useState('');
     const [repositorios, setrepositorios] = useState<Repositorio[]>([]);
+
+    
+
+    //guarda repositorios criado na local storage
+    useEffect(() => {
+        localStorage.setItem('@GitRespo', JSON.stringify(repositorios));
+    }, [repositorios]);
 
     async function handleAddrepositorio(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
