@@ -18,11 +18,17 @@ interface Repositorio {
 const Dashbord: React.FC = () => {
     const [newRepo, setnewRrepo] = useState('');
     const [inputError, setInputError] = useState('');
-    const [repositorios, setrepositorios] = useState<Repositorio[]>([]);
+    const [repositorios, setrepositorios] = useState<Repositorio[]>(() => {
+        // Lista ropositorios guardados na local storage
+        const storageRepositorios = localStorage.getItem('@GitRespo');
 
-    
+        if (storageRepositorios) {
+            return JSON.parse(storageRepositorios);
+        }
+        return [];
+    });
 
-    //guarda repositorios criado na local storage
+    // Guarda repositorios criado na local storage
     useEffect(() => {
         localStorage.setItem('@GitRespo', JSON.stringify(repositorios));
     }, [repositorios]);
