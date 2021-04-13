@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { shade } from 'polished';
 
 export const Header = styled.header`
     display: flex;
@@ -83,4 +84,52 @@ export const Title = styled.h1`
     max-width: 450px;
     line-height: 56px;
     margin-top: 30px;
+`;
+
+export const Issues = styled.div`
+    margin-top: 80px;
+    max-width: 700px;
+
+    a {
+        border: 0;
+        border-radius: 5px;
+        background: #fff;
+        width: 100%;
+        padding: 18px;
+        text-decoration: none;
+        display: block;
+
+        display: flex;
+        align-items: center;
+        transition: transform 0.2s;
+
+        & + a {
+            margin-top: 10px;
+        }
+
+        &:hover {
+            background: ${shade(0.2, '#fff')};
+            transform: translateX(10px);
+        }
+
+        div {
+            margin-left: 16px;
+            flex: 1;
+
+            strong {
+                font-weight: bold;
+                font-size: 20px;
+                color: #3a3a3a;
+            }
+            p {
+                margin-top: 4px;
+                font-size: 15px;
+                color: #3a3a3a;
+            }
+        }
+        svg {
+            margin-left: auto;
+            color: #3a3a3a;
+        }
+    }
 `;
